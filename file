@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    FILE *fptr1,*fptr2;
+    int ft,i=0;
+    char filename[100], c;
+    fptr1=fopen("abc.txt","r");
+    if(fptr1==NULL)
+    {
+        printf("ERROR");
+
+    }
+    fseek(fptr1,0,SEEK_END);
+    ft=ftell(fptr1);
+    while(i<ft)
+    {
+        i++;
+        fseek(fptr1,-i,SEEK_END);
+        printf("%c",fgetc(fptr1));
+    }
+
+   printf("Enter the filename to open for reading \n");
+   scanf("%s",filename);
+
+   fptr1 = fopen(filename, "r");
+   if (fptr1 == NULL)
+   {
+      printf("Cannot open file %s \n", filename);
+      exit(0);
+   }
+   printf("Enter the filename to open for writing \n");
+   scanf("%s", filename);
+
+   fptr2 = fopen(filename, "w");
+   if (fptr2 == NULL){
+      printf("Cannot open file %s \n", filename);
+      exit(0);
+   }
+
+   c = fgetc(fptr1);
+   while (c != EOF){
+      fputc(c, fptr2);
+      c = fgetc(fptr1);
+   }
+   printf("\nContents copied to %s", filename);
+   fclose(fptr1);
+   fclose(fptr2);
+   return 0;
+
+}
+
